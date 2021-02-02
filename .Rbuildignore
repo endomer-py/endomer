@@ -1,0 +1,12 @@
+^endomer\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^CODE_OF_CONDUCT\.md$
+^codecov\.yml$
+^contributors\.R$
+^contributors\.csv$

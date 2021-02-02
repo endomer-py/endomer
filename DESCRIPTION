@@ -1,0 +1,22 @@
+Package: endomer
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1.9000
+Authors@R: 
+    person(given = "Daniel E.",
+           family = "de la Rosa",
+           role = c("aut", "cre"),
+           email = "drdsdaniel@gmail.com")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+URL: https://github.com/endomer/endomer
+BugReports: https://github.com/endomer/endomer/issues
+Imports: 
+    sjlabelled,
+    lifecycle
+RdMacros: lifecycle
+Suggests: 
+    covr
