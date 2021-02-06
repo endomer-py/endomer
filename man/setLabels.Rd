@@ -2,28 +2,44 @@
 % Please edit documentation in R/Labels.R
 \name{setLabels}
 \alias{setLabels}
-\title{Etiquetas de datos}
+\title{Asigna etiquetas de datos a las variables especificadas}
 \usage{
-setLabels(tbl, vars = NULL, pattern)
+setLabels(tbl, vars = NULL, dict)
 }
 \arguments{
-\item{tbl}{Conexión a base de datos o dataframe con los datos de la ENCFT.}
+\item{tbl}{\link{data.frame}: Conexión a base de datos o dataframe con los datos}
 
-\item{vars}{Si especificado, solo se asignaran las etiquetas a esas variables.}
+\item{vars}{\link{character}: Si especificado, solo se asignaran las etiquetas a esas variables.}
 
-\item{pattern}{patrón inicial del nombre de las funciones del paquete}
+\item{dict}{\link{data.frame}: Diccionario con todas las etiquetas de datos a utilizar}
 }
 \value{
-Conexión a base de datos o dataframe según input.
+Los datos introducidos en el argumento \code{tbl} pero con etiquetas de datos
 }
 \description{
 \ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a>}}{\strong{Experimental}}
 }
 \details{
-Asigna etiquetas de datos a todas las variables que aplica.
+Esta función permite asignar etiquetas de datos a las variables de un data.frame
+o equivalente, a partir de un diccionario suministrado. En tal sentido,
+puedes utilizar esta función suministrando un diccionario peronal o utilizar
+las funciones equivalentes en los paquetes ENDOMER que traen un diccionario
+predefinido.
 }
 \examples{
 \dontrun{
-  encft <- setLabels(tbl = encft, pattern = "ftc")
+  dict <- list(
+    S2_P8 = list(
+      lab = "Â¿Tiene esta vivienda instalaciÃ³n para agua corriente por tuberÃ­a
+       conectada a la red pÃºblica?",
+      labs = c("Si" = 1, "No" = 2)
+    )
+   ) # enftr::dict
+  enft <- data.frame(S2_P8 = c(1, 2))
+  str(enft)
+  str(setLabels(enft, dict = dict))
 }
+}
+\seealso{
+Etiquetas de datos \code{vignette("labels", package = "endomer")}
 }

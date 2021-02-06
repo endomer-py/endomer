@@ -20,8 +20,7 @@ los paquetes del econsistema endomer.
 
 ## Instalación
 
-endomer se instala si ya has instalado otro de los paquetes del
-ecosistema.
+endomer se instala cuando instalas otro de los paquetes del ecosistema.
 
 <!-- You can install the released version of endomer from [CRAN](https://CRAN.R-project.org) with: -->
 <!-- ``` r -->
@@ -33,12 +32,12 @@ desarrollo desde [GitHub](https://github.com/) con:
 
 ``` r
 tryCatch(
-  library(devtools),
+  library(remotes),
   error = function(e){
-    install.packages('devtools')
+    install.packages('remotes')
   }
 )
-devtools::install_github("endomer/endomer")
+remotes::install_github("endomer/endomer")
 ```
 
 ## Contribuye

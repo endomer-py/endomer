@@ -1,12 +1,13 @@
 Package: endomer
-Title: What the Package Does (One Line, Title Case)
+Title: Funciones adicionales para los paquetes ENDOMER
 Version: 0.0.1.9000
 Authors@R: 
     person(given = "Daniel E.",
            family = "de la Rosa",
            role = c("aut", "cre"),
            email = "drdsdaniel@gmail.com")
-Description: What the package does (one paragraph).
+Description: Este paquete contiene funciones transversales y adicionales a las
+    que se pueden encontrar en los paquetes ENDOMER.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -19,4 +20,7 @@ Imports:
     lifecycle
 RdMacros: lifecycle
 Suggests: 
-    covr
+    covr,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
