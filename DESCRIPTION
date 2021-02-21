@@ -17,7 +17,10 @@ URL: https://github.com/endomer/endomer
 BugReports: https://github.com/endomer/endomer/issues
 Imports: 
     sjlabelled,
-    lifecycle
+    lifecycle,
+    Dmisc (>= 0.1.7.9001)
+Remotes:
+    drdsdaniel/Dmisc
 RdMacros: lifecycle
 Suggests: 
     covr,
