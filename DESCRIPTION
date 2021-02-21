@@ -25,6 +25,5 @@ RdMacros: lifecycle
 Suggests: 
     covr,
     knitr,
-    rmarkdown,
-    testthat
+    rmarkdown
 VignetteBuilder: knitr
