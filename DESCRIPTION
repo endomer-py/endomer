@@ -1,6 +1,6 @@
 Package: endomer
 Title: Funciones adicionales para los paquetes ENDOMER
-Version: 0.0.2.9000
+Version: 0.0.2.9001
 Authors@R: 
     person(given = "Daniel E.",
            family = "de la Rosa",
