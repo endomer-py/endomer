@@ -65,7 +65,7 @@ validateLab <- function(lab, dict) {
   } else {
     lab <- NULL
   }
-  lab
+  stringi::stri_unescape_unicode(lab)
 }
 
 validateLabs <- function(labs, dict) {
@@ -81,7 +81,7 @@ validateLabs <- function(labs, dict) {
       labs <- NULL
     }
   }
-  labs
+  stringi::stri_unescape_unicode(labs)
 }
 
 
