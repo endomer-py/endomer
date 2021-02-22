@@ -81,7 +81,10 @@ validateLabs <- function(labs, dict) {
       labs <- NULL
     }
   }
-  stringi::stri_unescape_unicode(labs)
+  if(!is.null(names(labs))){
+    names(labs) <- stringi::stri_unescape_unicode(names(labs))
+  }
+  labs
 }
 
 
