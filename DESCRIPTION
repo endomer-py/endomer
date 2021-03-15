@@ -1,6 +1,6 @@
 Package: endomer
 Title: Funciones adicionales para los paquetes ENDOMER
-Version: 0.0.2.9001
+Version: 0.0.3.9000
 Authors@R: 
     person(given = "Daniel E.",
            family = "de la Rosa",
@@ -18,10 +18,7 @@ BugReports: https://github.com/endomer/endomer/issues
 Imports: 
     sjlabelled,
     lifecycle,
-    Dmisc (>= 0.1.7.9001),
     stringi
-Remotes:
-    drdsdaniel/Dmisc
 RdMacros: lifecycle
 Suggests: 
     covr,

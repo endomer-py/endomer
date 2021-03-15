@@ -4,7 +4,7 @@
 \alias{setLabels}
 \title{Asigna etiquetas de datos a las variables especificadas}
 \usage{
-setLabels(tbl, vars = NULL, dict)
+setLabels(tbl, vars = NULL, dict, ignore_case = FALSE)
 }
 \arguments{
 \item{tbl}{\link{data.frame}: Conexión a base de datos o dataframe con los datos}
@@ -12,12 +12,14 @@ setLabels(tbl, vars = NULL, dict)
 \item{vars}{\link{character}: Si especificado, solo se asignaran las etiquetas a esas variables.}
 
 \item{dict}{\link{data.frame}: Diccionario con todas las etiquetas de datos a utilizar}
+
+\item{ignore_case}{\link{logical}: Indicate if case sensitive should be ignored.}
 }
 \value{
 Los datos introducidos en el argumento \code{tbl} pero con etiquetas de datos
 }
 \description{
-\ifelse{html}{\out{<a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a>}}{\strong{Experimental}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
 Esta función permite asignar etiquetas de datos a las variables de un data.frame
@@ -28,13 +30,6 @@ predefinido.
 }
 \examples{
 \dontrun{
-  dict <- list(
-    S2_P8 = list(
-      lab = "Â¿Tiene esta vivienda instalaciÃ³n para agua corriente por tuberÃ­a
-       conectada a la red pÃºblica?",
-      labs = c("Si" = 1, "No" = 2)
-    )
-   ) # enftr::dict
   enft <- data.frame(S2_P8 = c(1, 2))
   str(enft)
   str(setLabels(enft, dict = dict))

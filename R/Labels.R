@@ -5,6 +5,7 @@
 #' @param tbl [data.frame]: Conexión a base de datos o dataframe con los datos
 #' @param vars [character]: Si especificado, solo se asignaran las etiquetas a esas variables.
 #' @param dict [data.frame]: Diccionario con todas las etiquetas de datos a utilizar
+#' @param ignore_case [logical]: Indicate if case sensitive should be ignored.
 #'
 #' @return Los datos introducidos en el argumento \code{tbl} pero con etiquetas de datos
 #'
@@ -22,18 +23,11 @@
 #'
 #' @examples
 #' \dontrun{
-#'   dict <- list(
-#'     S2_P8 = list(
-#'       lab = "¿Tiene esta vivienda instalación para agua corriente por tubería
-#'        conectada a la red pública?",
-#'       labs = c("Si" = 1, "No" = 2)
-#'     )
-#'    ) # enftr::dict
 #'   enft <- data.frame(S2_P8 = c(1, 2))
 #'   str(enft)
 #'   str(setLabels(enft, dict = dict))
 #'}
-setLabels <- function(tbl, vars = NULL, dict) {
+setLabels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
   if(!is.null(vars)){
     names <- vars
   } else if(!is.null(tbl)){ # Validar luego las clases de tbl admitidas
@@ -43,6 +37,9 @@ setLabels <- function(tbl, vars = NULL, dict) {
   }
   if (all(!is.null(tbl), !is.null(names))) {
     for (name in names) {
+      if (ignore_case){
+        name <- names(dict)[tolower(names(dict)) == tolower(name)]
+      }
       lab <- dict[[name]]$lab
       labs <- dict[[name]]$labs
       lab <- validateLab(lab, dict)
