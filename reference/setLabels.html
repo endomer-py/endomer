@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">endomer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -122,10 +122,10 @@
     </div>
 
     <div class="ref-description">
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>setLabels</span><span class='op'>(</span><span class='va'>tbl</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>dict</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>setLabels</span><span class='op'>(</span><span class='va'>tbl</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>dict</span>, ignore_case <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +141,10 @@
     <tr>
       <th>dict</th>
       <td><p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>: Diccionario con todas las etiquetas de datos a utilizar</p></td>
+    </tr>
+    <tr>
+      <th>ignore_case</th>
+      <td><p><a href='https://rdrr.io/r/base/logical.html'>logical</a>: Indicate if case sensitive should be ignored.</p></td>
     </tr>
     </table>
 
@@ -160,13 +164,6 @@ predefinido.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>dict</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    S2_P8 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      lab <span class='op'>=</span> <span class='st'>"Â¿Tiene esta vivienda instalaciÃ³n para agua corriente por tuberÃ­a
-       conectada a la red pÃºblica?"</span>,
-      labs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Si"</span> <span class='op'>=</span> <span class='fl'>1</span>, <span class='st'>"No"</span> <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-    <span class='op'>)</span>
-   <span class='op'>)</span> <span class='co'># enftr::dict</span>
   <span class='va'>enft</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>S2_P8 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>enft</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>setLabels</span><span class='op'>(</span><span class='va'>enft</span>, dict <span class='op'>=</span> <span class='va'>dict</span><span class='op'>)</span><span class='op'>)</span>
