@@ -65,8 +65,6 @@ contribuyente](https://contributor-covenant.org/es/version/2/0/CODE_OF_CONDUCT.h
 Contribuyendo con el proyecto aceptas las términos y condiciones.
 
 <hr/>
-<!--html_preserve-->
-
 <a href="./articles/endomer.html"><button type="button"
 style = "
     border: 1px solid transparent;
@@ -82,5 +80,5 @@ style = "
     font-weight: 900;
     text-align: center;
     white-space: nowrap;
-    vertical-align: middle;"> Guía de inicio
-rápido</button></a><!--/html_preserve-->
+    vertical-align: middle;">
+    Guía de inicio rápido</button></a>

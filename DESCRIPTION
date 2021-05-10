@@ -1,6 +1,6 @@
 Package: endomer
 Title: Funciones adicionales para los paquetes ENDOMER
-Version: 0.1.0.9000
+Version: 0.1.2.9000
 Authors@R: 
     person(given = "Daniel E.",
            family = "de la Rosa",
@@ -19,9 +19,11 @@ Imports:
     sjlabelled,
     lifecycle,
     stringi,
-    DT
+    DT,
+    haven
 RdMacros: lifecycle
 Suggests: 
+    testthat,
     covr,
     knitr,
     rmarkdown

@@ -56,7 +56,6 @@ remotes::install_github("endomer/endomer")
 1. Escribir la Guía de inicio rápido
 1. Escribir viñeta de etiquetas de datos
 
-
 ## Contribuye
 
 Tienes comentarios o quieres contribuir?
@@ -64,8 +63,6 @@ Tienes comentarios o quieres contribuir?
 Por favor, revisa las [gias de contribución (en inglés)](https://endomer.github.io/endomer/CONTRIBUTING.html) antes de iniciar un issue o pull request.
 
 Por favor, observa que el proyecto endomer está sujeto a un [Código del contribuyente](https://contributor-covenant.org/es/version/2/0/CODE_OF_CONDUCT.html). Contribuyendo con el proyecto aceptas las términos y condiciones.
-
-
 
 <hr/>
 
