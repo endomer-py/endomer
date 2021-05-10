@@ -25,9 +25,9 @@
 #' \dontrun{
 #'   enft <- data.frame(S2_P8 = c(1, 2))
 #'   str(enft)
-#'   str(setLabels(enft, dict = dict))
+#'   str(set_labels(enft, dict = dict))
 #'}
-setLabels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
+set_labels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
   if(!is.null(vars)){
     names <- vars
   } else if(!is.null(tbl)){ # Validar luego las clases de tbl admitidas
@@ -44,10 +44,15 @@ setLabels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
       labs <- dict[[name]]$labs
       lab <- validateLab(lab, dict)
       labs <- validateLabs(labs, dict)
+      name <- names(tbl)[tolower(names(tbl)) == tolower(name)]
       tbl <- labellize(tbl, name, lab, labs)
     }
   }
   tbl
+}
+setLabels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
+  deprecate_warn("0.1.1", "endomer::setLabels()", "set_labels()")
+  set_labels(tbl, vars, dict, ignore_case)
 }
 
 
@@ -133,11 +138,11 @@ labellize <- function(tbl, var_name, lab, labs) {
 #'    ) # enftr::dict
 #'   enft <- data.frame(S2_P8 = c(1, 2))
 #'   enft
-#'   useLabels(enft, dict = dict)
+#'   use_labels(enft, dict = dict)
 #'}
-useLabels <- function(tbl, vars = NULL, dict = NULL) {
+use_labels <- function(tbl, vars = NULL, dict = NULL) {
   if(!is.null(dict)){
-    tbl <- setLabels(tbl, vars, dict)
+    tbl <- set_labels(tbl, vars, dict)
   }
   if(!is.null(vars)){
     names <- vars
@@ -152,6 +157,10 @@ useLabels <- function(tbl, vars = NULL, dict = NULL) {
     }
     tbl
   }
+}
+useLabels <- function(tbl, vars = NULL, dict = NULL) {
+  deprecate_warn("0.1.1", "endomer::useLabels()", "use_labels()")
+  use_labels(tbl, vars, dict)
 }
 
 
