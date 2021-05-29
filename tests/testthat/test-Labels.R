@@ -12,6 +12,13 @@ test_that("labels", {
     ALTURA = list(
       lab = "Altura de la persona",
       labs = c("Baja" = 1, "Media" = 2, "Alta" = 3)
+    ),
+    Sexo2 = list(
+      lab = "link::SEXO",
+      labs = "link::SEXO"
+    ),
+    Sexo3 = list(
+      lab = "Lab falsa"
     )
   )
   datos <- data.frame(
