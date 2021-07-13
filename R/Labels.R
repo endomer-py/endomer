@@ -40,16 +40,21 @@ set_labels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
       if (ignore_case){
         name <- names(dict)[tolower(names(dict)) == tolower(name)]
       }
-      lab <- dict[[name]]$lab
-      labs <- dict[[name]]$labs
-      lab <- validateLab(lab, dict)
-      labs <- validateLabs(labs, dict)
-      name <- names(tbl)[tolower(names(tbl)) == tolower(name)]
-      tbl <- labellize(tbl, name, lab, labs)
+      tryCatch({
+        lab <- dict[[name]]$lab
+        labs <- dict[[name]]$labs
+        lab <- validateLab(lab, dict)
+        labs <- validateLabs(labs, dict)
+        name <- names(tbl)[tolower(names(tbl)) == tolower(name)]
+        tbl <- labellize(tbl, name, lab, labs)},
+        error = function(e){
+
+        })
     }
   }
   tbl
 }
+
 setLabels <- function(tbl, vars = NULL, dict, ignore_case = FALSE) {
   deprecate_warn("0.1.1", "endomer::setLabels()", "set_labels()")
   set_labels(tbl, vars, dict, ignore_case)
@@ -112,6 +117,7 @@ labellize <- function(tbl, var_name, lab, labs) {
 #' @param vars [character]: Si especificado, solo se asignaran las etiquetas a esas variables.
 #' @param dict [data.frame]: Diccionario con todas las etiquetas de datos a utilizar
 #'   si aún no han sido asignadas. Vea \code{Details}.
+#' @param ignore_case [logical]: Indicate if case sensitive should be ignored.
 #'
 #' @return Los datos suministrados en el argumento \code{tbl}, pero en lugar de
 #'   valores utilizando las etiquetas de datos correspondientes
@@ -140,9 +146,9 @@ labellize <- function(tbl, var_name, lab, labs) {
 #'   enft
 #'   use_labels(enft, dict = dict)
 #'}
-use_labels <- function(tbl, vars = NULL, dict = NULL) {
+use_labels <- function(tbl, vars = NULL, dict = NULL, ignore_case = F) {
   if(!is.null(dict)){
-    tbl <- set_labels(tbl, vars, dict)
+    tbl <- set_labels(tbl, vars, dict, ignore_case)
   }
   if(!is.null(vars)){
     names <- vars
@@ -158,6 +164,7 @@ use_labels <- function(tbl, vars = NULL, dict = NULL) {
     tbl
   }
 }
+
 useLabels <- function(tbl, vars = NULL, dict = NULL) {
   deprecate_warn("0.1.1", "endomer::useLabels()", "use_labels()")
   use_labels(tbl, vars, dict)
