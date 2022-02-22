@@ -1,0 +1,57 @@
+---
+title: "endomer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{endomer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`endomer` es un metapaquete del proyecto **endomer+py**. Un metapaquete no es más que un paquete que tiene como utilidad principal, instalar y cargar otros paquetes del mismo proyecto. En tal sentido, a continuación se muestra un listado indicativo de los paquetes manejados con `endomer`. Para un listado actualizado consulte la página web del proyecto (https://endomer-py.github.io/)
+
+Nombre |Descripción                                                   |Enlace                               |
+-------|--------------------------------------------------------------|-------------------------------------|
+enftr  |Encuesta Nacional (tradicional) de Fuerza de Trabajo (ENFT)   |https://endomer-py.github.io/enftr/  |
+encftr |Encuesta Nacional Continua de Fuerza de Trabajo (ENCFT)       |https://endomer-py.github.io/encftr/ |
+enhogar|Encuesta Nacional de Hogares de Propósitos Múltiples (ENHOGAR)|https://endomer-py.github.io/enhogar/|
+
+# Ejemplo de uso
+
+```{r setup}
+library(endomer)
+```
+
+Este es un data.frame que simula los datos de la ENFT. En la documentación del paquete `enftr`, y en todos los demás, encontrará mucha más información útil para el correcto uso de dicho paquete.
+```{r}
+#enft <- readxl::read_excel("path/to/ENFT 2019.xlsx")
+enft <- data.frame(
+  EFT_PERIODO = c(rep("1/2019", 50), rep("2/2019", 50)),
+  EFT_EDAD = sample(1:100, 100, replace = TRUE),
+  EFT_SEXO = sample(1:2, 100, replace = TRUE)
+)
+head(enft)
+```
+
+En esta cadena de comandos se han utilizado dos funciones del paquete `enftr`[^1]:
+
+[^1]: Revisa la documentación del paquete para mayor información. Semejante uso tienen los demás paquetes del proyecto.
+
+* ft_peri_vars  (Creó las variables ano, periodo y semestre)
+* ft_use_labels (Que asignó las etiquetas Hombre/Mujer a la variable sexo)
+
+
+```{r}
+enft %>% 
+  enftr::ft_peri_vars() %>% 
+  dplyr::group_by(periodo, EFT_SEXO) %>% 
+  dplyr::summarise(edad_media = mean(EFT_EDAD)) %>% 
+  enftr::ft_use_labels()
+```
+

@@ -1,4 +1,4 @@
 ## usethis namespace: start
-#' @importFrom lifecycle deprecate_soft deprecate_warn
+#' @import enftr encftr enhogar
 ## usethis namespace: end
 NULL
