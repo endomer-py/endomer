@@ -1,30 +1,36 @@
 Package: endomer
-Title: Funciones adicionales para los paquetes ENDOMER
-Version: 0.1.2.9000
-Authors@R: 
-    person(given = "Daniel E.",
+Title: Metapaquete R del proyecto endomer+py
+Version: 0.2.0
+Authors@R:
+    c(person(given = "Daniel E.",
            family = "de la Rosa",
            role = c("aut", "cre"),
-           email = "drdsdaniel@gmail.com")
-Description: Este paquete contiene funciones transversales y adicionales a las
-    que se pueden encontrar en los paquetes ENDOMER.
+           email = "me@dnldelaros.com"),
+    person(given = "Adatar",
+           role = "cph"))
+Description: Instala y carga de manera automática todos los paquetes R del proyecto endomer+py.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
-URL: https://github.com/endomer/endomer
-BugReports: https://github.com/endomer/endomer/issues
+RoxygenNote: 7.1.2
+URL: https://github.com/endomer-py/endomer
+BugReports: https://github.com/endomer-py/endomer/issues
 Imports: 
-    sjlabelled,
-    lifecycle,
-    stringi,
-    DT,
-    haven
-RdMacros: lifecycle
+    dplyr
+Depends: 
+    enftr,
+    encftr,
+    enhogar
+Remotes: 
+    endomer-py/encftr,
+    endomer-py/enftr,
+    endomer-py/enhogar
 Suggests: 
-    testthat,
-    covr,
     knitr,
-    rmarkdown
+    cli,
+    purrr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
