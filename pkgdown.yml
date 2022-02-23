@@ -1,6 +1,10 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-05-10T23:35Z
+articles:
+  endomer: endomer.html
+last_built: 2022-02-23T04:04Z
+urls:
+  reference: https://endomer-py.github.io/endomer/reference
+  article: https://endomer-py.github.io/endomer/articles
 
