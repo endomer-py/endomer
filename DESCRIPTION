@@ -27,10 +27,11 @@ Depends:
     enhogar (>= 0.5.0),
     engihr (>= 0.3.0)
 Remotes: 
-    endomer-py/encftr,
-    endomer/enftr,
+    dnldelarosa/encftr,
+    dnldelarosa/enftr,
     endomer-py/enhogar,
-    adatar-do/engihr
+    endomer-py/engihr,
+    dnldelarosa/labeler@cf78c2c54908a66f399eaeb3c1f784fe8799d20f
 Suggests: 
     knitr,
     jsonlite,

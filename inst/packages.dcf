@@ -1,11 +1,11 @@
 package: enftr
 required: 0.9.0
-repository: https://github.com/endomer/enftr
+repository: https://github.com/dnldelarosa/enftr
 documentation: https://endomer-py.github.io/enftr/
 
 package: encftr
 required: 0.10.0
-repository: https://github.com/endomer-py/encftr
+repository: https://github.com/dnldelarosa/encftr
 documentation: https://endomer-py.github.io/encftr/
 
 package: enhogar
@@ -15,5 +15,5 @@ documentation: https://endomer-py.github.io/enhogar/
 
 package: engihr
 required: 0.3.0
-repository: https://github.com/adatar-do/engihr
+repository: https://github.com/endomer-py/engihr
 documentation: https://adatar-do.github.io/engihr/
