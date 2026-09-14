@@ -4,7 +4,7 @@ test_that("the catalog and installation requirements agree for all four surveys"
   for (i in seq_len(nrow(catalog))) {
     expect_match(depends, paste0(catalog$package[i], " (>= ", catalog$required[i], ")"), fixed=TRUE)
   }
-  expect_identical(catalog$repository[catalog$package=="engihr"], "https://github.com/adatar-do/engihr")
+  expect_identical(catalog$repository[catalog$package=="engihr"], "https://github.com/endomer-py/engihr")
 })
 test_that("ENGIH appears when missing, outdated, absent from an index or still loaded", {
   db <- fixture(); db <- db[db$Package!="engihr", ]
