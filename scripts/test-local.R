@@ -1,0 +1,9 @@
+source("endomer/scripts/bootstrap.R")
+roxygen2::roxygenise("endomer")
+pkgload::load_all("endomer",quiet=TRUE)
+r<-testthat::test_local("endomer",reporter="summary",stop_on_failure=TRUE)
+x<-as.data.frame(r)
+out<-Sys.getenv("ENDOMER_RELEASE_DIR","artifacts/endomer-engih-release")
+dir.create(out,recursive=TRUE,showWarnings=FALSE)
+jsonlite::write_json(list(tests=nrow(x),expectations=sum(x$nb),failed=sum(x$failed),warnings=sum(x$warning),skipped=sum(x$skipped)),
+ file.path(out,"r-tests.json"),auto_unbox=TRUE,pretty=TRUE)

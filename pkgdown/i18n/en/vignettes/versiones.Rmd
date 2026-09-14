@@ -1,0 +1,46 @@
+---
+title: "Versions, states and provenance"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Versions, states and provenance}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Offline inspection
+
+`endomer_packages()` returns the four-survey catalog and minimum versions. `endomer_deps()` inspects `.libPaths()` libraries and compares against that catalog. Neither endomer nor its surveys need to appear on CRAN. `endomer_update()` returns the same report and displays recommended actions; **it does not install or request confirmation**. Use `quiet=TRUE` to omit messages.
+
+Meeting a bundled minimum does not mean having the latest published version. The report identifies the comparison source in `source`: bundled_minimum, supplied_index or repository_index. `local` is the installed version according to library precedence; `loaded` is the version loaded in the session. A difference sets `restart_required=TRUE`, distinguishing new code on disk from code already in memory.
+
+## States and actions
+
+| State | Meaning | Typical action |
+|---|---|---|
+| meets_minimum | Meets the bundled catalog minimum | none |
+| current | Matches the supplied index target | none |
+| newer_than_target | Installation is newer than the target | none; no downgrade suggested |
+| below_minimum | Installation fails the minimum | update or resolve_source |
+| update_available | Index offers a newer compatible version | update |
+| not_installed | Absent from the inspected libraries | install or resolve_source |
+| unavailable | Index does not offer the package | resolve_source |
+| repository_below_minimum | Index offers a version below the minimum | resolve_source |
+| installed_unchecked | Installed transitive dependency without a verified target | inspect |
+
+`behind` is NA when the target is unknown. `required` and `meets_requirement` evaluate only the four survey minimums. `target_compatible` states whether a target satisfies that minimum. The historical `cran` column remains an alias of the index target; that index may come from another repository, and the field is NA for bundled-catalog comparisons.
+
+## Explicit indexes and recursion
+
+Pass `available` as a matrix/data.frame with Package and Version for a reproducible comparison. `repos` reads a source index from an R repository, including a local one; **it does not query GitHub**. These arguments are alternatives and cannot be combined. Failed requests or an empty remote index stop the operation; missing packages are never reported as current.
+
+`recursive=TRUE` follows Depends, Imports and LinkingTo using the supplied index and installed metadata. It excludes R, base packages and Suggests, and handles cycles and duplicates. This is an inventory, not a replacement for the R installer's full dependency constraint resolution. Dependencies without evidence receive no invented target version.
+
+```{r}
+library(endomer)
+endomer_deps()[c("package","required","local","status")]
+index <- data.frame(Package=c("enftr","encftr"), Version=c("0.9.0","0.10.0"))
+report <- endomer_deps(available=index)
+report[c("package","target","behind","status","action")]
+stopifnot(is.na(report$behind[report$package=="enhogar"]))
+plan <- endomer_update(quiet=TRUE)
+```

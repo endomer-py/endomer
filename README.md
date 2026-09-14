@@ -1,74 +1,22 @@
+# endomer 0.5.0
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+`endomer 0.5.0` reúne **enftr >= 0.9.0**, **encftr >= 0.10.0**, **enhogar >= 0.5.0** y **engihr >= 0.3.0**. Al instalarlo, R exige esas dependencias; `library(endomer)` carga las cuatro interfaces. El paquete no modifica sus cálculos ni combina cuestionarios.
 
-# endomer <img src='man/figures/logo.png' align="right" height="138" />
+## Paquetes incluidos
 
-<!-- badges: start -->
+| Paquete | Encuesta y alcance |
+|---|---|
+| enftr | ENFT tradicional; contratos semestrales y pobreza histórica 2005–2016 |
+| encftr | ENCFT continua; indicadores e ICV SIUBEN histórico integrado |
+| enhogar | ENHOGAR 2018 y 2022; indicadores y diccionarios por edición |
+| engihr | ENGIH 2018; 25 módulos con cobertura de diccionario documentada |
 
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R build
-status](https://github.com/endomer-py/endomer/workflows/R-CMD-check/badge.svg)](https://github.com/endomer-py/endomer/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/endomer-py/endomer/branch/main/graph/badge.svg)](https://codecov.io/gh/endomer-py/endomer?branch=main)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/endomer)](https://CRAN.R-project.org/package=endomer)
-<!-- badges: end -->
+Este metapaquete incluye esas cuatro encuestas. labeler y Dmisc se incorporan como dependencias de sus interfaces; no se adjuntan todos los proyectos del directorio ENDOM. Cada encuesta conserva sus límites metodológicos y cobertura de diccionario.
 
-Es un metapaquete. Su función principal es facilitar la instalación y
-carga de los demás paquetes R del proyecto **endomer+py**.
+## Un recorrido verificable
 
-## Instalación
+Los ejemplos siguientes son inventados. Separan períodos de ENFT, calculan un factor de un extracto ENCFT con divisor explícito y calculan inactividad ENHOGAR 2022. No producen estimaciones nacionales. Use nombres de paquete cuando haya nombres compartidos: `enftr::dict`, `encftr::dict` y `engihr::dict` son objetos distintos. Para ENGIH seleccione el módulo y la revisión con `engihr::egi_dict()`. La documentación por encuesta explica la preparación y sus reglas.
 
-Al instalar `endomer` instalas todos los demás paquetes R del proyecto
-**endomer+py**.
+ENHOGAR 2022 añade cinco módulos completos ONE REDATAM y una revisión combinada coverage-2 de 603 definiciones. ENGIH 2018 ofrece coverage-2 en 25 módulos, con 1700 descripciones de 1702 campos. La procedencia distingue diccionario oficial, cuestionarios y encabezados; HOLGURA y PERDIDA_TURISMO permanecen sin definición. baseline-1 se conserva en ambas encuestas.
 
-<!-- You can install the released version of endomer from [CRAN](https://CRAN.R-project.org) with: -->
-<!-- ``` r -->
-<!-- install.packages("endomer") -->
-<!-- ``` -->
-
-`endomer` no está dispobible en CRAN. Pero puedes instalar la versión de
-desarrollo desde [GitHub](https://github.com/) con:
-
-``` r
-tryCatch(
-  library(remotes),
-  error = function(e){
-    install.packages('remotes')
-  }
-)
-remotes::install_github("endomer-py/endomer")
-```
-
-## Contribuye
-
-Tienes comentarios o quieres contribuir?
-
-Por favor, revisa las [gias de contribución (en
-inglés)](https://endomer-py.github.io/endomer/CONTRIBUTING.html) antes
-de iniciar un issue o pull request.
-
-Por favor, observa que el proyecto endomer está sujeto a un [Código del
-contribuyente](https://contributor-covenant.org/es/version/2/0/CODE_OF_CONDUCT.html).
-Contribuyendo con el proyecto aceptas las términos y condiciones.
-
-<hr/>
-
-<a href="https://endomer-py.github.io/endomer/articles/endomer.html">
-  <svg width="50%" height="30" xmlns="http://www.w3.org/2000/svg">
-  <linearGradient id="a" x2="0" y2="100%">
-    <stop offset="0" stop-color="#bbb" stop-opacity="0.2"/>
-  <stop offset="1" stop-opacity="0.1"/>
-    </linearGradient>
-    <rect rx="4" x="0" width="50%" height="30" fill="#555"/>
-    <rect rx="4" x="0" width="50%" height="30" fill="#00a65a"/>
-    <rect rx="4" width="50%" height="30" fill="url(#a)"/>
-    <g fill="#fff" text-anchor="middle" font-size="18">
-    <text x="25%" y="21">Guía de inicio rápido</text>
-    </g>
-    </svg>
-    </a>
+[Inicio](articles/endomer.html) · [Informes de versiones](articles/versiones.html) · [Instalación y despliegue](articles/deployment.html) · [Python](articles/python.html) · [Dictionary revisions / Revisiones](articles/diccionarios.html).

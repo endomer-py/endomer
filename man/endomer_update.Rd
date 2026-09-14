@@ -2,23 +2,47 @@
 % Please edit documentation in R/update.R
 \name{endomer_update}
 \alias{endomer_update}
-\title{Actualiza los paquetes ENDOMER}
+\title{Preparar un informe de actualizacion sin instalar paquetes}
 \usage{
-endomer_update(recursive = FALSE, repos = getOption("repos"))
+endomer_update(
+  recursive = FALSE,
+  repos = NULL,
+  available = NULL,
+  lib.loc = .libPaths(),
+  quiet = FALSE
+)
 }
 \arguments{
-\item{recursive}{Si \code{TRUE}, incluso se listan las dependencias de las
-dependencias de ENDOMER.}
+\item{recursive}{TRUE incluye Depends, Imports y LinkingTo transitivos segun
+el indice suministrado y los metadatos instalados; excluye R y paquetes base.
+required solo declara minimos para las cuatro encuestas, no resuelve todas
+las restricciones de dependencias transitivas.}
 
-\item{repos}{Los repositorios que se utilizarán para verificar las actualizaciones.
-Por defecto se toma \code{getOption("repos")}.}
+\item{repos}{Repositorios R explicitos para consultar indices fuente, o NULL
+para trabajar sin red. No consulta GitHub automaticamente.}
+
+\item{available}{Indice local opcional, matriz o data.frame con Package y
+Version. Puede incluir Depends, Imports, LinkingTo y Priority. Es alternativo
+a repos y permite comprobar repositorios sin hacer consultas de red.}
+
+\item{lib.loc}{Bibliotecas instaladas, en orden de prioridad. Por defecto
+.libPaths(). La version cargada se informa aparte de la instalada.}
+
+\item{quiet}{TRUE omite los mensajes; siempre devuelve el informe invisible.}
+}
+\value{
+El mismo data.frame de endomer_deps(), de forma invisible.
 }
 \description{
-Se valida si hay actualizaciones disponibles para los paquetes ENDOMER, y se
-pregunta al usuario si desea actualizarlos.
+Preparar un informe de actualizacion sin instalar paquetes
+}
+\details{
+La funcion conserva su nombre historico pero prepara un informe.
+No solicita confirmaciones ni modifica bibliotecas. Con el catalogo local
+informa cumplimiento de minimos; no afirma estar actualizado en Internet.
+Los indices incompletos y objetivos inferiores al minimo permanecen visibles.
 }
 \examples{
-\dontrun{
-endomer_update()
-}
+plan <- endomer_update(quiet=TRUE)
+plan[c("package","local","required","action")]
 }

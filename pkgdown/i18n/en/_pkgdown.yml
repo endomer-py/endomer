@@ -1,5 +1,5 @@
-url: https://endomer-py.github.io/endomer/
-lang: es
+url: https://endomer-py.github.io/endomer/en/
+lang: en
 news:
   cran_dates: false
 home:
@@ -13,9 +13,9 @@ navbar:
     right: [search, github]
   components:
     intro:
-      text: Inicio
+      text: Home
       href: index.html
 articles:
-  - title: Guías
+  - title: Guides
     navbar: ~
     contents: [endomer, versiones, diccionarios, deployment, python]

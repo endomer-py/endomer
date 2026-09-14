@@ -1,0 +1,30 @@
+---
+title: "Instalación y despliegue"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Instalación y despliegue}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Instalar la entrega
+
+La entrega contiene fuentes y binarios Windows de endomer 0.5.0, enftr 0.9.0, encftr 0.10.0, enhogar 0.5.0, engihr 0.3.0, labeler 0.11.0 y Dmisc 0.4.0. Las otras dependencias declaradas deben estar instaladas. El binario está verificado en Windows/R 4.5.1; otras plataformas deben instalar desde fuente y ejecutar sus comprobaciones.
+
+Desde la carpeta extraída puede ejecutar `Rscript install.R ruta/a/biblioteca`. El instalador comprueba el inventario y las sumas de los siete artefactos antes de instalar, usa únicamente archivos locales y escribe en la biblioteca indicada. La biblioteca debe ser nueva o estar vacía y necesita permisos de escritura. El instalador comprueba también las restricciones de versión declaradas en external-constraints.dcf. Consulte external-dependencies.txt para las dependencias externas; si faltan, el instalador se detiene antes de modificar la biblioteca. No descarga automáticamente dependencias.
+
+La instalación manual sigue este orden: labeler, Dmisc, enftr, encftr, enhogar, engihr y endomer. Use `install.packages(archivo, repos=NULL, type="win.binary")` para ZIP en Windows o `type="source"` para tar.gz. Reinicie R después de actualizar paquetes que ya estaban cargados y añada la biblioteca a `.libPaths()` antes de `library(endomer)`.
+
+## Construcción y publicación
+
+Desde el workspace que contiene endomer, ejecute `Rscript endomer/scripts/check-release.R`. Para el sitio use `Rscript endomer/scripts/build-docs.R` y `python endomer/scripts/check-sites.py artifacts/endomer-engih-release/sites/r --kind r`. Requiere las dependencias del paquete, pkgdown, roxygen2 y Beautiful Soup para la auditoría. pkgdown puede consultar metadatos públicos durante la compilación.
+
+El sitio estático sirve español en la raíz e inglés en en/. Incluye referencia de todas las funciones, búsqueda por idioma y navegación recíproca. El workflow permite construir y publicar solo cuando se activa explícitamente publish. Publique primero las versiones mínimas de las dependencias en sus repositorios; los artefactos de esta entrega ya permiten instalación local. No se ha ejecutado CI ni publicación remota.
+
+## Migración desde 0.3.0
+
+La carga conjunta agrega engihr >= 0.3.0 y el catálogo devuelve cuatro filas. Adapte cualquier código que suponga tres filas; seleccione por package. Use funciones prefijadas egi_ y nombres calificados para diccionarios compartidos.
+
+## Migración desde 0.2.0
+
+La consulta predeterminada pasa a ser sin red. `repos` sigue aceptándose explícitamente y se conservan recursive, package, local, cran y behind. La ausencia de un paquete en un índice queda visible, y se eliminan los mensajes engañosos de estar al día. La función endomer_update entrega un informe utilizable sin imprimir comandos de instalación incompletos. La carga conjunta conserva las cuatro encuestas y evita importar todos sus nombres al namespace del metapaquete.

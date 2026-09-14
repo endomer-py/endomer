@@ -1,0 +1,19 @@
+---
+title: "Relationship with Python"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Relationship with Python}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`endomer` is the **R** metapackage. Python already has a joint entry point in **endompy 0.8.0**: `endompy.enftr`, `endompy.encftr`, `endompy.enhogar` and `endompy.engihr`. It does not need another layer that automatically installs or imports Python modules.
+
+| R | Python | Shared contract scope |
+|---|---|---|
+| enftr 0.9.0 | endompy.enftr | Traditional ENFT |
+| encftr 0.10.0 | endompy.encftr | ENCFT and historical ICV |
+| enhogar 0.5.0 | endompy.enhogar | ENHOGAR 2018 and 2022 |
+| engihr 0.3.0 | endompy.engihr | ENGIH 2018 dictionaries; 25 modules |
+
+This release does not change endompy or its calculations. endomer_deps and endomer_update inspect R libraries and are not Python environment checkers. Use Python's installation tools for those environments. Dictionary revisions remain independent of package versions in both languages.

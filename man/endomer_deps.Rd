@@ -2,17 +2,50 @@
 % Please edit documentation in R/update.R
 \name{endomer_deps}
 \alias{endomer_deps}
-\title{Lista todas las dependencias de ENDOMER}
+\title{Comprobar versiones instaladas y disponibles}
 \usage{
-endomer_deps(recursive = FALSE, repos = getOption("repos"))
+endomer_deps(
+  recursive = FALSE,
+  repos = NULL,
+  available = NULL,
+  lib.loc = .libPaths()
+)
 }
 \arguments{
-\item{recursive}{Si \code{TRUE}, incluso se listan las dependencias de las
-dependencias de ENDOMER.}
+\item{recursive}{TRUE incluye Depends, Imports y LinkingTo transitivos segun
+el indice suministrado y los metadatos instalados; excluye R y paquetes base.
+required solo declara minimos para las cuatro encuestas, no resuelve todas
+las restricciones de dependencias transitivas.}
 
-\item{repos}{Los repositorios que se utilizarán para verificar las actualizaciones.
-Por defecto se toma \code{getOption("repos")}.}
+\item{repos}{Repositorios R explicitos para consultar indices fuente, o NULL
+para trabajar sin red. No consulta GitHub automaticamente.}
+
+\item{available}{Indice local opcional, matriz o data.frame con Package y
+Version. Puede incluir Depends, Imports, LinkingTo y Priority. Es alternativo
+a repos y permite comprobar repositorios sin hacer consultas de red.}
+
+\item{lib.loc}{Bibliotecas instaladas, en orden de prioridad. Por defecto
+.libPaths(). La version cargada se informa aparte de la instalada.}
+}
+\value{
+data.frame con versiones requeridas, instaladas, cargadas y objetivo,
+estado, acciones recomendadas y procedencia. behind es NA si el objetivo
+es desconocido. cran conserva el nombre historico para la version del
+indice consultado; no implica que el repositorio sea CRAN.
 }
 \description{
-Lista todas las dependencias de ENDOMER
+Por defecto compara con el catalogo incluido, sin consultar Internet. Los
+paquetes no tienen que estar publicados en CRAN para aparecer en el informe.
+}
+\details{
+meets_minimum confirma el minimo incluido, no que se tenga la ultima
+version publicada. unavailable significa que el indice no contiene el
+paquete. Con recursive=TRUE, las dependencias sin objetivo verificable se
+marcan installed_unchecked. No instala, descarga ni carga paquetes.
+}
+\examples{
+endomer_deps()
+indice <- data.frame(Package=c("enftr","encftr","enhogar","engihr"),
+                     Version=c("0.9.0","0.10.0","0.5.0","0.3.0"))
+endomer_deps(available=indice)
 }

@@ -1,0 +1,46 @@
+---
+title: "Versiones, estados y procedencia"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Versiones, estados y procedencia}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Consulta sin red
+
+`endomer_packages()` devuelve el catálogo de las cuatro encuestas y sus mínimos. `endomer_deps()` inspecciona las bibliotecas de `.libPaths()` y compara con ese catálogo. No requiere que endomer o sus encuestas estén en CRAN. `endomer_update()` devuelve el mismo informe y muestra las acciones recomendadas; **no instala ni solicita confirmaciones**. Use `quiet=TRUE` para obtenerlo sin mensajes.
+
+Cumplir el mínimo incluido no significa tener la última versión publicada. El informe identifica el origen de comparación en `source`: bundled_minimum, supplied_index o repository_index. `local` es la versión instalada según el orden de bibliotecas; `loaded` es la versión cargada en la sesión. Si difieren, `restart_required=TRUE` evita confundir código nuevo en disco con código ya cargado.
+
+## Estados y acciones
+
+| Estado | Interpretación | Acción habitual |
+|---|---|---|
+| meets_minimum | Cumple el mínimo del catálogo incluido | none |
+| current | Coincide con el objetivo del índice indicado | none |
+| newer_than_target | La instalación es posterior al objetivo | none; no propone degradar |
+| below_minimum | La instalación no cumple el mínimo | update o resolve_source |
+| update_available | El índice ofrece una versión posterior compatible | update |
+| not_installed | No aparece en las bibliotecas inspeccionadas | install o resolve_source |
+| unavailable | El índice no ofrece ese paquete | resolve_source |
+| repository_below_minimum | El índice ofrece una versión inferior al mínimo | resolve_source |
+| installed_unchecked | Dependencia transitiva instalada sin objetivo verificable | inspect |
+
+`behind` es NA cuando el objetivo es desconocido. `required` y `meets_requirement` solo evalúan los mínimos de las cuatro encuestas. `target_compatible` indica si el objetivo cumple ese mínimo. La columna histórica `cran` se conserva como alias del objetivo del índice; puede proceder de otro repositorio y queda NA al comparar con el catálogo incluido.
+
+## Índices explícitos y recursión
+
+Puede pasar `available` como matriz/data.frame con Package y Version para una comparación reproducible. `repos` consulta un índice fuente de un repositorio R, incluido uno local; **no consulta GitHub**. Son alternativas: no se aceptan juntas. Un error de consulta o un índice remoto vacío detiene la operación, y los paquetes ausentes no se presentan como actualizados.
+
+`recursive=TRUE` recorre Depends, Imports y LinkingTo usando el índice suministrado y metadatos instalados. Excluye R, paquetes base y Suggests. Evita ciclos y duplicados. Es un inventario: no sustituye la resolución completa de restricciones del instalador R. No se inventan versiones objetivo para dependencias sin evidencia.
+
+```{r}
+library(endomer)
+endomer_deps()[c("package","required","local","status")]
+index <- data.frame(Package=c("enftr","encftr"), Version=c("0.9.0","0.10.0"))
+report <- endomer_deps(available=index)
+report[c("package","target","behind","status","action")]
+stopifnot(is.na(report$behind[report$package=="enhogar"]))
+plan <- endomer_update(quiet=TRUE)
+```

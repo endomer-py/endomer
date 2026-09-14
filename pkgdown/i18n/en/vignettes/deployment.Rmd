@@ -1,0 +1,30 @@
+---
+title: "Installation and deployment"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Installation and deployment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Install the delivery
+
+The delivery includes sources and Windows binaries for endomer 0.5.0, enftr 0.9.0, encftr 0.10.0, enhogar 0.5.0, engihr 0.3.0, labeler 0.11.0 and Dmisc 0.4.0. Other declared dependencies must already be installed. Binaries were verified on Windows/R 4.5.1; other platforms should install from source and run their own checks.
+
+From the extracted folder run `Rscript install.R path/to/library`. The installer verifies the inventory and checksums of all seven artifacts before installation, uses local files only and writes to the specified library. The library must be new or empty and writable. The installer also checks declared version constraints in external-constraints.dcf. See external-dependencies.txt for external dependencies; if any are missing, installation stops before modifying the library. Dependencies are not downloaded automatically.
+
+Manual installation order is labeler, Dmisc, enftr, encftr, enhogar, engihr and endomer. Use `install.packages(file, repos=NULL, type="win.binary")` for Windows ZIP files, or `type="source"` for tar.gz. Restart R after upgrading loaded packages and add the library to `.libPaths()` before `library(endomer)`.
+
+## Build and publish
+
+From the workspace containing endomer, run `Rscript endomer/scripts/check-release.R`. Build the site with `Rscript endomer/scripts/build-docs.R` and audit it with `python endomer/scripts/check-sites.py artifacts/endomer-engih-release/sites/r --kind r`. Package dependencies, pkgdown, roxygen2 and Beautiful Soup for auditing are required. pkgdown may read public metadata while building.
+
+The static site serves Spanish at root and English in en/. It contains complete function reference, language-specific search and reciprocal navigation. The workflow builds and publishes only when its publish input is explicitly enabled. Publish the minimum dependency versions to their repositories before remote CI; this delivery already supports local installation. No remote CI or publication was performed.
+
+## Migration from 0.3.0
+
+Joint attachment adds engihr >= 0.3.0 and the catalog returns four rows. Update code that assumes three rows; select by package instead. Use egi_ functions and qualified names for shared dictionaries.
+
+## Migration from 0.2.0
+
+Default inspection is now offline. Explicit repos is still supported, and recursive, package, local, cran and behind are retained. Packages missing from an index remain visible, and misleading up-to-date messages are removed. endomer_update returns a usable report without printing incomplete installation commands. Joint attachment retains the four surveys while avoiding imports of every survey name into the metapackage namespace.

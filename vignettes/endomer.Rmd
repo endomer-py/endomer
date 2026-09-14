@@ -1,57 +1,40 @@
 ---
-title: "endomer"
+title: "Inicio: las cuatro encuestas"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{endomer}
+  %\VignetteIndexEntry{Inicio: las cuatro encuestas}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+`endomer 0.5.0` reúne **enftr >= 0.9.0**, **encftr >= 0.10.0**, **enhogar >= 0.5.0** y **engihr >= 0.3.0**. Al instalarlo, R exige esas dependencias; `library(endomer)` carga las cuatro interfaces. El paquete no modifica sus cálculos ni combina cuestionarios.
 
-`endomer` es un metapaquete del proyecto **endomer+py**. Un metapaquete no es más que un paquete que tiene como utilidad principal, instalar y cargar otros paquetes del mismo proyecto. En tal sentido, a continuación se muestra un listado indicativo de los paquetes manejados con `endomer`. Para un listado actualizado consulte la página web del proyecto (https://endomer-py.github.io/)
+## Paquetes incluidos
 
-Nombre |Descripción                                                   |Enlace                               |
--------|--------------------------------------------------------------|-------------------------------------|
-enftr  |Encuesta Nacional (tradicional) de Fuerza de Trabajo (ENFT)   |https://endomer-py.github.io/enftr/  |
-encftr |Encuesta Nacional Continua de Fuerza de Trabajo (ENCFT)       |https://endomer-py.github.io/encftr/ |
-enhogar|Encuesta Nacional de Hogares de Propósitos Múltiples (ENHOGAR)|https://endomer-py.github.io/enhogar/|
+| Paquete | Encuesta y alcance |
+|---|---|
+| enftr | ENFT tradicional; contratos semestrales y pobreza histórica 2005–2016 |
+| encftr | ENCFT continua; indicadores e ICV SIUBEN histórico integrado |
+| enhogar | ENHOGAR 2018 y 2022; indicadores y diccionarios por edición |
+| engihr | ENGIH 2018; 25 módulos con cobertura de diccionario documentada |
 
-# Ejemplo de uso
+Este metapaquete incluye esas cuatro encuestas. labeler y Dmisc se incorporan como dependencias de sus interfaces; no se adjuntan todos los proyectos del directorio ENDOM. Cada encuesta conserva sus límites metodológicos y cobertura de diccionario.
 
-```{r setup}
+## Un recorrido verificable
+
+Los ejemplos siguientes son inventados. Separan períodos de ENFT, calculan un factor de un extracto ENCFT con divisor explícito y calculan inactividad ENHOGAR 2022. No producen estimaciones nacionales. Use nombres de paquete cuando haya nombres compartidos: `enftr::dict`, `encftr::dict` y `engihr::dict` son objetos distintos. Para ENGIH seleccione el módulo y la revisión con `engihr::egi_dict()`. La documentación por encuesta explica la preparación y sus reglas.
+
+ENHOGAR 2022 añade cinco módulos completos ONE REDATAM y una revisión combinada coverage-2 de 603 definiciones. ENGIH 2018 ofrece coverage-2 en 25 módulos, con 1700 descripciones de 1702 campos. La procedencia distingue diccionario oficial, cuestionarios y encabezados; HOLGURA y PERDIDA_TURISMO permanecen sin definición. baseline-1 se conserva en ambas encuestas.
+
+```{r}
 library(endomer)
+endomer_packages()
+enftr::ft_peri_vars(data.frame(EFT_PERIODO=c("1/2005","2/2005")))
+encftr::ftc_factor_expansion_anual(data.frame(FACTOR_EXPANSION=c(100,200)), periods=4)
+enhogar::ehg_inactivo(enhogar::enhogar_example(2022), min_edad=10, edition=2022)[c("case_id","pet","inactivo")]
+engih <- engihr::egi_example()
+labelled <- engihr::egi_set_labels(engih, version="baseline-1")
+stopifnot(identical(as.numeric(labelled$A201), engih$A201))
+engihr::egi_validate(labelled)
+engihr::egi_dict_versions("b1")[c("dictionary_id","version")]
 ```
-
-Este es un data.frame que simula los datos de la ENFT. En la documentación del paquete `enftr`, y en todos los demás, encontrará mucha más información útil para el correcto uso de dicho paquete.
-```{r}
-#enft <- readxl::read_excel("path/to/ENFT 2019.xlsx")
-enft <- data.frame(
-  EFT_PERIODO = c(rep("1/2019", 50), rep("2/2019", 50)),
-  EFT_EDAD = sample(1:100, 100, replace = TRUE),
-  EFT_SEXO = sample(1:2, 100, replace = TRUE)
-)
-head(enft)
-```
-
-En esta cadena de comandos se han utilizado dos funciones del paquete `enftr`[^1]:
-
-[^1]: Revisa la documentación del paquete para mayor información. Semejante uso tienen los demás paquetes del proyecto.
-
-* ft_peri_vars  (Creó las variables ano, periodo y semestre)
-* ft_use_labels (Que asignó las etiquetas Hombre/Mujer a la variable sexo)
-
-
-```{r}
-enft %>% 
-  enftr::ft_peri_vars() %>% 
-  dplyr::group_by(periodo, EFT_SEXO) %>% 
-  dplyr::summarise(edad_media = mean(EFT_EDAD)) %>% 
-  enftr::ft_use_labels()
-```
-

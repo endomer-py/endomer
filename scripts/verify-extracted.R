@@ -1,0 +1,7 @@
+source("endomer/scripts/bootstrap.R")
+out<-normalizePath(Sys.getenv("ENDOMER_RELEASE_DIR","artifacts/endomer-engih-release"),winslash="/")
+rscript<-file.path(R.home("bin"),if(.Platform$OS.type=="windows") "Rscript.exe" else "Rscript")
+status<-system2(rscript,c(shQuote(file.path(out,"zip-extracted/install.R")),shQuote(file.path(out,"install-zip"))))
+if(status!=0L)stop("Extracted bundle installation failed")
+status<-system2(rscript,c("endomer/scripts/verify-installed.R","zip"))
+if(status!=0L)stop("Extracted bundle integration failed")

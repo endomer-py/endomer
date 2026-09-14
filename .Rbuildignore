@@ -10,3 +10,4 @@
 ^codecov\.yml$
 ^contributors\.R$
 ^contributors\.csv$
+^scripts$

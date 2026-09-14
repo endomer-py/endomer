@@ -1,0 +1,39 @@
+---
+title: "Packages, editions and revisions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Packages, editions and revisions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The endomer version sets installation requirements; the engihr version identifies its code. ENGIH edition 2018 and immutable module revision `baseline-1` are separate selections. Upgrading endomer does not change user-registered dictionaries.
+
+Record the package, edition, module, revision and content hash to reproduce an analysis. `endomer_deps()` inspects R packages; `engihr::egi_dict_versions()` inspects revisions. Date selectors require documented validity intervals; the survey year does not establish them.
+
+This example uses B1, with four definitions. It changes one label in an in-memory SQLite registry and checks that the other three references remain identical. The connection belongs to the caller. The 25 bundled modules have different coverage: inspect `egi_schema()` and `egi_validate()` before applying labels.
+
+The interoperable registry preserves revisions between R labeler and Python labelerpy. The endompy 0.8.0 delivery includes round-trip validation; this metapackage does not manage Python environments.
+
+
+
+ENHOGAR 2022 adds five complete ONE REDATAM modules and a combined coverage-2 revision with 603 definitions. ENGIH 2018 offers coverage-2 across 25 modules, with 1700 descriptions of 1702 fields. Provenance distinguishes official dictionary entries, questionnaires and headers; HOLGURA and PERDIDA_TURISMO remain undefined. Both surveys preserve baseline-1.
+
+```{r}
+library(endomer)
+if (requireNamespace("RSQLite", quietly=TRUE)) local({
+  con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+  on.exit(DBI::dbDisconnect(con))
+  original <- engihr::egi_dict("b1", version="baseline-1")
+  labeler::db_import_dict_version(con, original)
+  draft <- labeler::dict_draft(original)
+  draft$FREC_COMPRA_ALIMENTOS$label <- "Frecuencia revisada / Revised frequency"
+  revised <- engihr::egi_register_dict(con, draft, "review-2", module="b1", parent_version="baseline-1")
+  before <- labeler::dict_revision(original)$variable_refs
+  after <- labeler::dict_revision(revised)$variable_refs
+  unchanged <- setdiff(names(before), "FREC_COMPRA_ALIMENTOS")
+  stopifnot(length(unchanged)==3L, identical(before[unchanged], after[unchanged]))
+  stopifnot(!identical(before$FREC_COMPRA_ALIMENTOS, after$FREC_COMPRA_ALIMENTOS))
+  print(engihr::egi_dict_versions("b1", con=con)[c("version","parent_version")])
+})
+```

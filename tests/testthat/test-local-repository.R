@@ -1,0 +1,10 @@
+test_that("an actual local source index works without a metapackage record", {
+  repo<-tempfile("endomer-repo-");dir.create(file.path(repo,"src","contrib"),recursive=TRUE)
+  index<-data.frame(Package=c("enftr","encftr","enhogar","engihr"),Version=c("0.9.0","0.10.0","0.5.0","0.3.0"))
+  write.dcf(index,file.path(repo,"src","contrib","PACKAGES"))
+  url<-paste0("file://",if(.Platform$OS.type=="windows") "/" else "",normalizePath(repo,winslash="/"))
+  report<-endomer_deps(repos=url)
+  expect_identical(report$package,index$Package)
+  expect_identical(report$target,index$Version)
+  expect_identical(report$source,rep("repository_index",4))
+})

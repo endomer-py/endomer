@@ -1,36 +1,45 @@
 Package: endomer
 Title: Metapaquete R del proyecto endomer+py
-Version: 0.2.0
+Version: 0.5.0
 Authors@R:
     c(person(given = "Daniel E.",
            family = "de la Rosa",
            role = c("aut", "cre"),
-           email = "me@dnldelaros.com"),
+           email = "me@dnldelarosa.com"),
     person(given = "Adatar",
            role = "cph"))
-Description: Instala y carga de manera automática todos los paquetes R del proyecto endomer+py.
+Description: Reune las interfaces para ENFT, ENCFT, ENHOGAR y ENGIH mediante versiones
+    minimas declaradas y carga conjunta. Permite inspeccionar versiones instaladas,
+    contrastarlas con el catalogo incluido o un indice de repositorio explicito y
+    preparar informes de actualizacion sin modificar las bibliotecas de R.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
-URL: https://github.com/endomer-py/endomer
+RoxygenNote: 7.3.2
+URL: https://github.com/endomer-py/endomer, https://endomer-py.github.io/endomer/
 BugReports: https://github.com/endomer-py/endomer/issues
 Imports: 
-    dplyr
+    magrittr
 Depends: 
-    enftr,
-    encftr,
-    enhogar
+    R (>= 4.1.0),
+    enftr (>= 0.9.0),
+    encftr (>= 0.10.0),
+    enhogar (>= 0.5.0),
+    engihr (>= 0.3.0)
 Remotes: 
     endomer-py/encftr,
-    endomer-py/enftr,
-    endomer-py/enhogar
+    endomer/enftr,
+    endomer-py/enhogar,
+    adatar-do/engihr
 Suggests: 
     knitr,
-    cli,
-    purrr,
+    jsonlite,
+    roxygen2,
+    pkgdown,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.2.0),
+    DBI,
+    RSQLite,
+    labeler (>= 0.11.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
